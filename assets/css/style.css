@@ -1,0 +1,415 @@
+/* Mobile Frist */
+@font-face {
+    font-family: Inter;
+    src: url(/assets/font/Inter/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Inter;
+}
+
+:root {
+    --claro: #f0f0f0;
+    --claro2: #ddd;
+    --escuro: #141414;
+    --azul: #054f77;
+}
+
+body {
+    min-width: 300px;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.5s;
+    overflow-x: hidden;
+}
+
+nav {
+    font-weight: 600;
+    width: 100vw;
+    min-height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--claro);
+    box-shadow: var(--escuro) 0px -5px 10px;
+    margin-bottom: 2rem;
+}
+
+.mostrahora {
+    position: relative;
+    padding: 0.5rem 0rem;
+    width: 100%;
+    height: 100%;
+    min-height: 50px;
+    border-top: 1px var(--claro2) solid;
+    border-left: none;
+    border-right: none;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+section {
+    width: 90vw;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90vw;
+    min-width: 300px;
+    padding: 0 1rem;
+    justify-content: center;
+}
+
+.areaMsg,
+.areaCalc,
+.areaFat,
+.areaResult {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    max-width: 500px;
+    width: 100%;
+}
+
+
+.areaMsg input,
+.areaCalc input,
+.areaFat input,
+.areaResult input,
+textarea {
+    width: 90%;
+    min-height: 40px;
+    border: none;
+    border-radius: 2rem;
+    margin: 0.5rem 0;
+    padding: 0.5em 1em;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.45);
+}
+
+
+textarea {
+    border-radius: 1rem;
+}
+
+.areaResult {
+    text-align: center;
+    max-width: none;
+}
+
+.areaResult input {
+    text-align: center;
+    font-size: 1rem;
+}
+
+input[type="submit"] {
+    background-color: var(--azul);
+    color: var(--claro2);
+    opacity: 0.95;
+    font-weight: bolder;
+    min-height: 50px;
+    padding: 0;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    transform: translate(1px, 1mm);
+    box-shadow: 0px 0px 15px rgba(10, 10, 10, 0.45);
+}
+
+input[type="number"] {
+    text-align: center;
+}
+
+input[type="number"]:focus,
+:active {
+    text-align: center;
+    font-weight: 600;
+}
+
+
+.CalBtns {
+    width: 100%;
+    padding: 0 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input[name="soma"] {
+    background-image: url("/assets/img/add.png");
+}
+
+input[name="sub"] {
+    background-image: url("/assets/img/sub.png");
+}
+
+input[name="div"] {
+    background-image: url("/assets/img/div.png");
+}
+
+input[name="mult"] {
+    background-image: url("/assets/img/mult.png");
+
+}
+
+#soma,
+#subtrai {
+    max-width: 50px;
+    background-size: 50px;
+}
+
+.CalBtns input[type="submit"] {
+    box-shadow: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px;
+}
+
+.CalBtns input[type="submit"]:hover {
+    transform: translateY(1mm);
+    filter: drop-shadow(0 1mm 1.5mm var(--azul));
+}
+
+.areaCalc input[type="submit"] {
+    max-width: 50px;
+    border-radius: 100px;
+    margin: 0.5rem 1rem;
+}
+
+
+.areaResult input {
+    margin: 0.5rem 0.5rem;
+    width: 40%;
+}
+
+.areaResult input[type='text'],
+.areaResult input[type='number'] {
+    min-width: 300px;
+}
+
+/* .result {
+    cursor: default !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+    color: var(--escuro) !important;
+    font-weight: 500 !important;
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 100px !important;
+} */
+
+/* .result:focus,
+.result:hover,
+.result:active {
+    box-shadow: 0 0 10px var(--azul);
+} */
+
+.tabela {
+    max-width: 1000px;
+    width: 90%;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--claro2);
+    border: 1px dashed var(--azul);
+
+}
+
+.tabela td,
+th {
+    font-size: calc(1rem+1vw);
+    text-align: center;
+    padding: 0.5rem 0;
+    border: 1px solid black;
+    min-width: 50px;
+    border: none;
+    border-bottom: 2px solid var(--azul);
+}
+
+.tabela th {
+    border-radius: 0;
+    color: #1414147f;
+}
+
+.tabela td {
+    padding-bottom: 0.5rem;
+}
+
+.tabela td a {
+    text-decoration: none;
+    color: var(--claro2);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.75px;
+}
+
+#thId {
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid var(--azul);
+}
+
+#idTabela {
+    max-width: 100px;
+    color: var(--azul);
+}
+
+#botaoTabela {
+    border: none;
+    padding: 0rem 0rem;
+    width: 100px;
+    border-radius: 200px;
+    background-color: var(--azul);
+    opacity: 0.9;
+}
+
+#botaoTabela:hover {
+    opacity: 1;
+    box-shadow: inset 0 0 5px #141414;
+}
+
+/* tela grande */
+@media (min-width:481px) {
+    nav {
+        flex-direction: row;
+    }
+
+    .mostrahora {
+        border-bottom: none;
+        border-top: none;
+        padding: 0.5rem 1rem 0 1rem;
+        max-height: 100%;
+        margin: 0 0.5rem;
+    }
+
+    .areaMsg {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .areaMsg input,
+    .areaFat input,
+    .areaResult input {
+        width: 45%;
+        margin: 0.5rem 0.25rem;
+    }
+
+    .areaResult {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 1rem 0;
+        max-width: 1000px;
+        width: 80%;
+    }
+
+    .areaResult input {
+        font-size: larger;
+    }
+
+    .areaResult input[type="text"] {
+        width: 55%;
+    }
+
+    .areaResult input[type="number"] {
+        width: 25%;
+        min-width: 150px;
+    }
+
+    .areaResult input[type="submit"] {
+        width: 15%;
+        min-width: 100px;
+    }
+
+
+    input[type="number"],
+    input[type="text"],
+    input[type="email"] {
+        padding: 1.5em 1em;
+
+    }
+
+    .areaResult input[type="text"],
+    .areaResult input[type="number"] {
+        padding: 1em 0em;
+    }
+
+    .tabela td a {
+        font-size: calc(0.5rem + 0.5vw);
+    }
+
+    #idTabela {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        border: 1px dashed var(--azul);
+        font-weight: bolder;
+        /* animation: id 3s linear 0.5s 1; */
+    }
+
+}
+
+/* Fazer Resultado só aparecer quando quiserem editar: */
+.areaResult {
+    display: none;
+    visibility: hidden;
+}
+
+/* 
+Animação Id Tabela
+
+@keyframes id {
+    0% {
+        box-shadow: inset 0 0 0px transparent;
+        border: 1px dashed var(--azul);
+        color: var(--azul);
+    }
+
+    100% {
+        border: 1px solid var(--azul);
+        box-shadow: inset 0 0 50px var(--azul);
+        color: var(--claro2);
+    }
+} */
+
+/* Animation Tabela */
+
+@keyframes tabelaAnimation {
+    0% {
+        box-shadow: 0px 0px 7px var(--escuro);
+    }
+
+    50% {
+        box-shadow: 0px 1px 8px var(--escuro);
+        transform: translate(0, -1px);
+    }
+
+    100% {
+        box-shadow: 0px 0px 7px var(--escuro);
+    }
+
+}
