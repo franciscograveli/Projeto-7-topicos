@@ -1,4 +1,6 @@
-/* Mobile Frist */
+/* Mobile Frist 
+Formatado para modelos de tela apartir de ceular médio (+-350px)
+*/
 @font-face {
     font-family: Inter;
     src: url(/assets/font/Inter/Inter-VariableFont_slnt\,wght.ttf);
@@ -237,6 +239,7 @@ input[name="mult"] {
     padding: 0.5rem 1.5rem;
     background-color: var(--claro2);
     border: 1px dashed var(--azul);
+    box-shadow: 0 10px var(--escuro);
 
 }
 
@@ -286,6 +289,7 @@ th {
     border-radius: 200px;
     background-color: var(--azul);
     opacity: 0.9;
+    max-height: 30px;
 }
 
 #botaoTabela:hover {
@@ -368,7 +372,6 @@ th {
         border-radius: 50px;
         border: 1px dashed var(--azul);
         font-weight: bolder;
-        /* animation: id 3s linear 0.5s 1; */
     }
 
 }
@@ -380,6 +383,7 @@ th {
 }
 
 /* 
+
 Animação Id Tabela
 
 @keyframes id {
@@ -397,7 +401,7 @@ Animação Id Tabela
 } */
 
 /* Animation Tabela */
-
+/* 
 @keyframes tabelaAnimation {
     0% {
         box-shadow: 0px 0px 7px var(--escuro);
@@ -411,4 +415,4 @@ Animação Id Tabela
     100% {
         box-shadow: 0px 0px 7px var(--escuro);
     }
-}
+} */

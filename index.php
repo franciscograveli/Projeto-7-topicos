@@ -9,6 +9,8 @@
 7. Crie uma classe em PHP chamada "Calculadora" que tenha métodos para somar, subtrair, multiplicar e dividir dois números. Teste a classe em um arquivo PHP separado. 
 -->
 
+<!-- Todo codigo seria mais eficiente e se fosse separado em arquivos e funções que fossem utilizados conforme necessario,
+porem tentei seguir o roteiro ao máximo -->
 
 <!--  -->
 <?php //PHP - form com envio de email via PHPMailer(2)
@@ -17,8 +19,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-if ((isset($_POST['nome'])) || (isset($_POST['email']))) {
-    if (strlen($_POST['nome']) < 2) {
+if ((isset($_POST['nome'])) || (isset($_POST['email']))) { //verificando se o nome ou email está bem definido
+    if (strlen($_POST['nome']) == 0) { // verificando se por quantidade de caracteres o nome é valido
         echo
         "
         <script>
@@ -26,7 +28,7 @@ if ((isset($_POST['nome'])) || (isset($_POST['email']))) {
         document.location.href = '/index.php';
         </script>
         ";
-    } else if (strlen($_POST['email']) < 2) {
+    } else if (strlen($_POST['email']) < 2) { // verificando se por quantidade de caracteres o email é valido
         echo
         "
         <script>
@@ -34,7 +36,7 @@ if ((isset($_POST['nome'])) || (isset($_POST['email']))) {
         document.location.href = '/index.php';
         </script>
         ";
-    } else if (strlen($_POST['msg']) == 0) {
+    } else if (strlen($_POST['msg']) == 0) { // verificando se por quantidade de caracteres a mensagem é valida
         echo
         "
         <script>
@@ -42,47 +44,63 @@ if ((isset($_POST['nome'])) || (isset($_POST['email']))) {
         document.location.href = '/index.php';
         </script>
         ";
-    } else {
+    } else { // se passar por todas verificações, começa a preparar a validação para envio do email
 
-        require 'assets/PHPMailer-master/src/Exception.php';
-        require 'assets/PHPMailer-master/src/PHPMailer.php';
-        require 'assets/PHPMailer-master/src/SMTP.php';
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = 'tls';
-        $mail->Username = 'junior.js87@gmail.com';
-        $mail->Password = 'xiccbkvhskwrtqds';
-        $mail->Port = 587;
+        $nomeMsg = ucwords(strtolower($_POST['nome'])); // pega o nome inteiro e ajusta padroniza começando com a primeira letra maiuscula em cada palavra
+        $primeiroNome = strtok($nomeMsg, " "); //pegando o primeiro nome
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); // "removendo" os caracteres especiais do email para verificar se o formato é valido
 
-        $mail->setFrom('junior.js87@gmail.com');
-
-        $mail->addAddress($_POST['email']);
-
-        $mail->isHTML(true);
-
-        $mail->Subject = "!Assunto!";
-
-        $mail->Body = $_POST['msg'];
-
-        $mail->send();
-        if (!$mail->send()) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //se o email não for validado, mostra um erro
             echo
             "
+            <script>
+            alert('$primeiroNome, $_POST[email] não é um formato de e-mail válido.');
+            document.location.href = '/index.php'
+            </script>
+            ";
+        } else { // senão se for valido prepara o email
+            require 'assets/PHPMailer-master/src/Exception.php';
+            require 'assets/PHPMailer-master/src/PHPMailer.php';
+            require 'assets/PHPMailer-master/src/SMTP.php';
+
+            $mail = new PHPMailer(true); //utilizando PHPMailer para envio de email
+            $mail->setFrom('junior.js87@gmail.com');
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Username = 'junior.js87@gmail.com';
+            $mail->Password = 'xiccbkvhskwrtqds';
+            $mail->Port = 587;
+
+            $mail->setFrom('junior.js87@gmail.com');
+
+            $mail->addAddress($_POST['email']);
+
+            $mail->isHTML(true);
+
+            $mail->Subject = "Mensagem de: $nomeMsg";
+
+            $mail->Body = $_POST['msg'];
+
+            $mail->send();
+            if (!$mail->send()) { //se a função send do PHPMailer não for definida, apresenta erro
+                echo
+                "
             <script>
             alert('Não foi possível enviar a mensagem.<br> Erro:" . "$mail->ErrorInfo');
             document.location.href = '/index.php';
             </script>
             ";
-        } else {
-            echo
-            "
+            } else { // se a função send realizar o envio sem problemas, mostra um agradecimento
+                echo
+                "
             <script>
-            alert('Obrigado por entrar em contato, " . "$_POST[nome]!');
+            alert('Obrigado por entrar em contato, " . "$primeiroNome!');
             document.location.href = '/index.php'
             </script>
             ";
+            }
         }
     }
 }
@@ -108,14 +126,15 @@ function fatorial($n)
         return "!Inválido!";
     }
 }
-if (isset($_POST['fatorial'])) {
-    $aux = (int)($_POST['fatorial']);
-    $resultadoF = fatorial((int)($_POST['fatorial']));
+
+if (isset($_POST['fatorial'])) { //verificando se o input fatorial está definido
+    $aux = (int)($_POST['fatorial']); // definindo uma variavel auxiliar para manter o input fatorial com o valor que a pessoa está utilizando para a conta
+    $resultadoF = fatorial((int)($_POST['fatorial'])); // definindo o resultado fatorial por meio da funcão fatorial criada anteriormente | Utilizando a função int pois fatorial só está definido para os naturais
 }
 ?>
 <!--  -->
 <?php //PHP - Conectar ao Banco(4)
-
+//utilizando a bibliotexa mysqli para coneção com o banco
 $host = "localhost";
 $login = "root";
 $senha = "";
@@ -127,7 +146,7 @@ if ($mysqli->error) {
     die("Erro de Conexão:" . $mysqli->error);
 }
 
-$retorno = $mysqli->query("SELECT * FROM produtos");
+$retorno = $mysqli->query("SELECT * FROM produtos"); //retornando os dados da tabela produtos
 
 ?>
 <!--  -->
@@ -135,7 +154,7 @@ $retorno = $mysqli->query("SELECT * FROM produtos");
 $nomeProduto = '';
 $precoProduto = '';
 
-if ($retorno->num_rows > 0) {
+if ($retorno->num_rows > 0) { //verificando se a tabela não está vazia
     echo "<table  class='tabela'>";
     echo "
             <tr>
@@ -152,7 +171,7 @@ if ($retorno->num_rows > 0) {
                         <td id='botaoTabela'><a href='index.php?id=$row[id]#resultado'>Editar</a></td>
                     </tr>";
     }
-    if (!empty($_GET['id'])) {
+    if (!empty($_GET['id'])) { //verificando se o id não está vazio 
 ?>
         <!--  Fazer Resultado só aparecer quando quiserem editar: -->
         <style>
@@ -162,22 +181,22 @@ if ($retorno->num_rows > 0) {
             }
         </style>
 <?php
-        $id = $_GET['id'];
+        $id = $_GET['id']; //definindo a variavel $id utilizando get pois o id é passado na url
 
-        $sqlSelect = "SELECT * FROM produtos WHERE id=$id";
+        $sqlSelect = "SELECT * FROM produtos WHERE id=$id"; //definindo um codigo sql para a busca por id
 
-        $resultadoById = $mysqli->query($sqlSelect);
+        $resultadoById = $mysqli->query($sqlSelect); //definindo uma variavel para guardar o resultado da busca por id
 
-        if ($resultadoById->num_rows > 0) {
+        if ($resultadoById->num_rows > 0) { //verificando se existe algo no resultado (através do n° de colunas)
 
-            while ($produto = $resultadoById->fetch_assoc()) {
+            while ($produto = $resultadoById->fetch_assoc()) { //utilizando a var $produto como uma matriz associativa (fetch_assoc) para poder trabalhar com o banco
                 $nomeProduto = $produto['nome'];
                 $precoProduto = $produto['preco'];
 
-                if (isset($_POST['update'])) {
-                    if ((!empty($_POST['nomeItem'])) && (!empty($_POST['precoItem']))) {
+                if (isset($_POST['update'])) { //verificando se foi solicitado uma edição no banco
+                    if ((!empty($_POST['nomeItem'])) && (!empty($_POST['precoItem']))) { //verificando que existem informações para fazer a alteração
 
-                        $sqlEdit = "UPDATE produtos SET nome='$_POST[nomeItem]', preco='$_POST[precoItem]' WHERE id='$id'";
+                        $sqlEdit = "UPDATE produtos SET nome='$_POST[nomeItem]', preco='$_POST[precoItem]' WHERE id='$id'"; //definindo codigo de alteração para o sql
 
                         $mysqli->query($sqlEdit);
 
@@ -185,7 +204,7 @@ if ($retorno->num_rows > 0) {
                             echo
                             "
                             <script>
-                            alert('Atualizado com Sucesso!" . "$_POST[nome]!');
+                            alert('Produto ID:$id, Atualizado com Sucesso!');
                             document.location.href = '/index.php'
                             </script>
                             ";
@@ -281,13 +300,12 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
         <div class="mostrahora" id="mostrahora1">
 
             <?php //PHP - Data e Hora (1)
+            $timeReload = true;
             date_default_timezone_set('America/Sao_Paulo');
-
             $data = getdate();
             print_r($data['hours'] . ':' . $data['minutes'] . ':' . $data['seconds']);
             echo "<br>";
             print_r($data['weekday'] . ', ' . $data['mday'] . ' de ' . $data['month'] . ' de ' . $data['year']);
-
             ?>
 
         </div>
@@ -322,7 +340,7 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
             <!--  -->
             <div class="areaCalc">
                 <form action="" method="POST" id="calc">
-                    <input readonly type="text" name="" id="" min="0" placeholder='<?php echo $calc; ?>' class="result" style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
+                    <input readonly type="text" name="" id="" value='<?php echo $calc; ?>' style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width: 35%; min-width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
                     <input type="number" name="a" id="" step="any" placeholder="A:" value="0">
                     <input type="number" name="b" id="" step="any" placeholder="B:" value="0">
                     <div class="Calbtns">
@@ -335,10 +353,12 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
             </div>
             <!--  -->
             <div class="areaFat">
-                <form action="" method="POST">
-                    <input readonly type="text" name="" id="" min="0" placeholder='<?php echo $resultadoF; ?>' style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
+                <form action="" method="POST" id="fat">
+                    <input readonly type="text" name="" id="" min="0" value='<?php echo $resultadoF; ?>' style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; height: 100px;<?php if ($resultadoF <= 999999) {
+                                                                                                                                                                                                                            echo "width:100px;";
+                                                                                                                                                                                                                        } ?> border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
                     <input type="number" name="fatorial" id="" min="0" placeholder='<?php echo $aux .  "!"; ?>'>
-                    <input type="submit" value="Calcular">
+                    <input type="submit" value="Calcular" id="fat">
                 </form>
             </div>
 
