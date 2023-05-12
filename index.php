@@ -173,13 +173,13 @@ if ($retorno->num_rows > 0) { //verificando se a tabela não está vazia
     }
     if (!empty($_GET['id'])) { //verificando se o id não está vazio 
 ?>
-        <!--  Fazer Resultado só aparecer quando quiserem editar: -->
-        <style>
-            .areaResult {
-                display: flex;
-                visibility: visible;
-            }
-        </style>
+<!--  Fazer Resultado só aparecer quando quiserem editar: -->
+<style>
+.areaResult {
+    display: flex;
+    visibility: visible;
+}
+</style>
 <?php
         $id = $_GET['id']; //definindo a variavel $id utilizando get pois o id é passado na url
 
@@ -286,12 +286,18 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="pr-br">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/assets/img/favicon_io/site.webmanifest">
     <title>PHP-7-em-1</title>
 </head>
 
@@ -340,7 +346,8 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
             <!--  -->
             <div class="areaCalc">
                 <form action="" method="POST" id="calc">
-                    <input readonly type="text" name="" id="" value='<?php echo $calc; ?>' style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width: 35%; min-width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
+                    <input readonly type="text" name="" id="" value='<?php echo $calc; ?>'
+                        style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width: 35%; min-width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
                     <input type="number" name="a" id="" step="any" placeholder="A:" value="0">
                     <input type="number" name="b" id="" step="any" placeholder="B:" value="0">
                     <div class="Calbtns">
@@ -354,9 +361,8 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
             <!--  -->
             <div class="areaFat">
                 <form action="" method="POST" id="fat">
-                    <input readonly type="text" name="" id="" min="0" value='<?php echo $resultadoF; ?>' style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; height: 100px;<?php if ($resultadoF <= 999999) {
-                                                                                                                                                                                                                            echo "width:100px;";
-                                                                                                                                                                                                                        } ?> border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
+                    <input readonly type="text" name="" id="" min="0" value='<?php echo $resultadoF; ?>'
+                        style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; height: 100px;<?php if ($resultadoF <= 999999) { echo "width:100px;"; } ?> border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
                     <input type="number" name="fatorial" id="" min="0" placeholder='<?php echo $aux .  "!"; ?>'>
                     <input type="submit" value="Calcular" id="fat">
                 </form>
@@ -367,11 +373,11 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
     <div class="areaResult" id="resultado">
         <form action="" method="POST">
             <input type="text" name="nomeItem" id="" placeholder="Nome:" value="<?php echo $nomeProduto ?>">
-            <input type="number" step="any" min="0" name="precoItem" id="" placeholder="Preço:" value="<?php echo $precoProduto ?>">
+            <input type="number" step="any" min="0" name="precoItem" id="" placeholder="Preço:"
+                value="<?php echo $precoProduto ?>">
             <input type="submit" name="update" value="Enviar">
         </form>
     </div>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>
