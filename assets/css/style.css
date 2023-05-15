@@ -146,11 +146,12 @@ input[type="number"] {
     text-align: center;
 }
 
+/* 
 input[type="number"]:focus,
 :active {
     text-align: center;
     font-weight: 600;
-}
+} */
 
 
 .CalBtns {
