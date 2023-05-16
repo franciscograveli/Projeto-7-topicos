@@ -10,8 +10,8 @@ function conectarBanco()
 
     $mysqli = new mysqli($host, $login, $senha, $nomebd);
 
-    if ($mysqli->error) {
-        die("Erro de Conexão:" . $mysqli->error);
+    if ($mysqli->connect_error) {
+        die("Erro de Conexão:" . $mysqli->connect_error);
     } else {
         return $mysqli;
     }
@@ -34,8 +34,11 @@ function consultarTabelaPorId($nomeTabela, $id)
 }
 function editarTabela($nomeTabela, $nomeItem, $precoItem, $id)
 {
-    $mysqli = conectarBanco();
-    $sqlEdit = "UPDATE $nomeTabela SET nome='$nomeItem', preco='$precoItem' WHERE id='$id'"; //definindo codigo de alteração para o sql
-    $mysqli->query($sqlEdit);
-    $mysqli->close();
+    if ($id != -1) {
+
+        $mysqli = conectarBanco();
+        $sqlEdit = "UPDATE $nomeTabela SET nome='$nomeItem', preco='$precoItem' WHERE id='$id'"; //definindo codigo de alteração para o sql
+        $mysqli->query($sqlEdit);
+        $mysqli->close();
+    }
 }

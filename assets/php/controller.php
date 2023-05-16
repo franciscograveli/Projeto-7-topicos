@@ -43,6 +43,8 @@ if (isset($_POST['fatorial'])) { //verificando se o input fatorial está definid
     require_once '../../index.php';
 }
 
+//
+
 //PHP Calculadora - (7)
 if ((isset($_POST['a'])) && (isset($_POST['b']))) {
     require '../php/funcoes/calculadora.php';
@@ -61,12 +63,19 @@ if ((isset($_POST['a'])) && (isset($_POST['b']))) {
     require_once '../../index.php';
 }
 
-//PHP - Exibir Tabela produtos e Editar ((5)&&(6))
-require '../php/model.php';
-$retorno = consultarTabela('produtos'); // solicitando matriz associativa da tabela para o model
+//PHP - Exibir Tabela produtos
+if (isset($_POST['show'])) {
+    require_once '../../index.php';
+}
 
+require '../php/model.php';
+
+$retorno = consultarTabela('produtos'); // solicitando matriz associativa da tabela para o model
+$nomeI = '';
+$precoI = '';
+
+// exibindo tabela
 if ($retorno->num_rows > 0) { //verificando se a tabela não está vazia
-    // exibindo tabela
     echo "<table  class='tabela'>";
     echo "
             <tr>
@@ -83,33 +92,24 @@ if ($retorno->num_rows > 0) { //verificando se a tabela não está vazia
                         <td id='botaoTabela'><a href='controller.php?id=$row[id]#resultado'>Editar</a></td>
                     </tr>";
     }
+}
+//
+if (!empty($_GET['id'])) { //verificando se o id não está vazio 
+    $id = $_GET['id'];
 
-    //
-
-    if (!empty($_GET['id'])) { //verificando se o id não está vazio 
-        $id = $_GET['id']; //definindo a variavel $id utilizando get pois o id é passado na url
-        echo "teste" . $id;
-        $resultadoById = consultarTabelaPorId('produtos', $id); //definindo uma variavel para guardar o resultado da busca por id
-        if ($resultadoById->num_rows > 0) {
-            while ($produto = $resultadoById->fetch_assoc()) { //utilizando a var $produto como uma matriz associativa (fetch_assoc) para poder trabalhar com o banco
-                $nomeProduto = $produto['nome'];
-                $precoProduto = $produto['preco'];
-                if (isset($_POST['update'])) { //verificando se foi solicitado uma edição no banco
-                    //verificando que existem informações para fazer a alteração
-                    var_dump($resultadoById);
-                    editarTabela('produtos', 'dasdsadsa', 10, $id);
-                }
-            }
+    $resultadoById = consultarTabelaPorId('produtos', $id); //definindo uma variavel para guardar o resultado da busca por id
+    if ($resultadoById->num_rows > 0) {
+        while ($produto = $resultadoById->fetch_assoc()) { //utilizando a var $produto como uma matriz associativa (fetch_assoc) para poder trabalhar com o banco
+            $nomeI = $produto['nome'];
+            $precoI = $produto['preco'];
         }
-        // else {
-        //     echo
-        //     "
-        //     <script>
-        //     alert('Numero de Rows <= 0');
-        //     document.location.href = '/index.php'
-        //     </script>
-        //     ";
-        // }
+    }
+    if (isset($_POST['update'])) { //verificando se o id não está vazio 
+        //definindo a variavel $id utilizando get pois o id é passado na url
+        $nomeI = $_POST['nomeItem'];
+        $precoI = $_POST['precoItem'];
+        editarTabela('produtos', $nomeI, $precoI, $id);
+        require_once '../../index.php';
     }
     require_once '../../index.php';
 }

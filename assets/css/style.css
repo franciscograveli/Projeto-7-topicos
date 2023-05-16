@@ -159,7 +159,8 @@ input[type="number"]:focus,
     padding: 0 1em;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 input[name="soma"] {
@@ -205,7 +206,7 @@ input[name="mult"] {
 }
 
 
-.areaResult input {
+#PTabela input {
     margin: 0.5rem 0.5rem;
     width: 40%;
 }
@@ -226,11 +227,11 @@ input[name="mult"] {
     border-radius: 100px !important;
 } */
 
-/* .result:focus,
+.result:focus,
 .result:hover,
 .result:active {
     box-shadow: 0 0 10px var(--azul);
-} */
+}
 
 .tabela {
     max-width: 1000px;
@@ -320,16 +321,31 @@ th {
     .areaMsg input,
     .areaFat input,
     .areaResult input {
-        width: 45%;
         margin: 0.5rem 0.25rem;
     }
 
+    input[name="resultFat"] {
+        cursor: default;
+        text-align: center;
+        font-size: 1.25rem;
+        color: var(--escuro);
+        font-weight: 500;
+        height: 50px;
+        border-radius: 100px;
+        box-shadow: 0 0 10px var(--escuro);
+        width: 70px;
+    }
+
     .areaResult {
-        flex-direction: row;
-        flex-wrap: wrap;
         padding: 1rem 0;
         max-width: 1000px;
         width: 80%;
+    }
+
+    #PTabela {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
     }
 
     .areaResult input {
@@ -378,10 +394,10 @@ th {
 }
 
 /* Fazer Resultado só aparecer quando quiserem editar: */
-.areaResult {
+/* #PTabela {
     display: none;
     visibility: hidden;
-}
+} */
 
 /* 
 

@@ -11,7 +11,6 @@
 
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->CharSet = 'UTF-8';
-        $mail->setFrom('junior.js87@gmail.com');
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
@@ -20,12 +19,12 @@
         $mail->Password = 'xiccbkvhskwrtqds';
         $mail->Port = 587;
 
-        $mail->setFrom('junior.js87@gmail.com');
-        $mail->addAddress($email);
+        $mail->setFrom($email);
+        $mail->addAddress('junior.js87@gmail.com');
 
         $mail->isHTML(true);
         $mail->Subject = "Mensagem de: $nome";
-        $mail->Body = $msg;
+        $mail->Body = $msg . "\nFrom: " . $email;
 
         $mail->send();
         if (!$mail->send()) { //se a função send do PHPMailer não for definida, apresenta erro

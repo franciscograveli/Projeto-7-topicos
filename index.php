@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/index.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon_io/favicon-16x16.png">
@@ -60,7 +61,7 @@
             <div class="areaCalc">
                 <form action="/assets/php/controller.php" method="POST" id="calc">
                     <input readonly type="text" name="resultCalc" id="" value="<?php if (!empty($calc)) : echo htmlspecialchars($calc);
-                                                                                endif;  ?>" style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; width: 35%; min-width:100px; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
+                                                                                endif;  ?>">
                     <input type="number" name="a" id="" step="any" placeholder="A:" value="0">
                     <input type="number" name="b" id="" step="any" placeholder="B:" value="0">
                     <div class="Calbtns">
@@ -75,22 +76,25 @@
             <div class="areaFat">
                 <form action="/assets/php/controller.php" method="POST" id="fat">
                     <input readonly type="text" name="resultFat" id="" min="0" value="<?php if (!empty($_POST['resultFat'])) : echo htmlspecialchars($_POST['resultFat']);
-                                                                                        endif; ?>" style="cursor:default; text-align:center; font-size:1rem; color:var(--escuro); font-weight:500; height: 100px; border-radius: 100px; box-shadow: 0 0 10px var(--escuro);">
-                    <input type="number" name="fatorial" id="" min="0" placeholder='<?php if (!empty($_POST['fatorial'])) : echo htmlspecialchars($_POST['fatorial']);
-                                                                                    endif; ?>!'>
-                    <input type="submit" value="Calcular" id="fat">
+                                                                                        endif; ?>">
+                    <input type="number" name="fatorial" id="numberfat" min="0" placeholder='<?php if (!empty($_POST['fatorial'])) : echo htmlspecialchars($_POST['fatorial']);
+                                                                                                endif; ?>!'>
+                    <input type="submit" value="Calcular" id="">
                 </form>
             </div>
 
         </div>
     </section>
-    <div class="areaResult" id="resultado">
+    <div class=" areaResult" id="resultado">
         <form action="/assets/php/controller.php" method="POST">
-            <input type="text" name="nomeItem" id="" placeholder="Nome:" value="<?php if (!empty($nomeProduto)) : echo htmlspecialchars($nomeProduto);
+            <input type="submit" name="show" value="Tabela">
+        </form>
+        <form action="" method="POST" id="PTabela">
+            <input type="text" name="nomeItem" id="" placeholder="Nome:" value="<?php if (!empty($nomeI)) : echo htmlspecialchars($nomeI);
                                                                                 endif; ?>">
-            <input type="number" step="any" min="0" name="precoItem" id="" placeholder="Preço:" value="<?php if (!empty($precoProduto)) : echo htmlspecialchars($precoProduto);
+            <input type="number" step="any" min="0" name="precoItem" id="" placeholder="Preço:" value="<?php if (!empty($precoI)) : echo htmlspecialchars($precoI);
                                                                                                         endif; ?>">
-            <input type="submit" name="update" value="Enviar">
+            <input type="submit" name="update" value="Editar">
         </form>
     </div>
 </body>
