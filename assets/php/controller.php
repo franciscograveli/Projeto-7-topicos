@@ -1,68 +1,81 @@
-<?php //PHP - form com envio de email via PHPMailer(2)
-if ((isset($_POST['nome'])) || (isset($_POST['email']))) { //verificando se o nome ou email está bem definido
-    if (strlen($_POST['nome']) == 0) { // verificando se por quantidade de caracteres o nome é valido
-        echo
-        "
-        <script>
-        alert('Preencha seu nome');
-        document.location.href = '/index.php';
-        </script>
-        ";
-    } else if (strlen($_POST['email']) < 2) { // verificando se por quantidade de caracteres o email é valido
-        echo
-        "
-        <script>
-        alert('Preencha seu Email');
-        document.location.href = '/index.php';
-        </script>
-        ";
-    } else if (strlen($_POST['msg']) == 0) { // verificando se por quantidade de caracteres a mensagem é valida
-        echo
-        "
-        <script>
-        alert('Preencha seu Mensagem');
-        document.location.href = '/index.php';
-        </script>
-        ";
-    } else { // se passar por todas verificações, começa a preparar a validação para envio do email
-        require '../php/funcoes/enviaremail.php';
-
-        $nomeMsg = ucwords(strtolower($_POST['nome'])); // pega o nome inteiro e ajusta padroniza começando com a primeira letra maiuscula em cada palavra
-        $primeiroNome = strtok($nomeMsg, " "); //pegando o primeiro nome
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); // "removendo" os caracteres especiais do email para verificar se o formato é valido
-
-        enviarEmail($primeiroNome, $email, $_POST['msg']);
-    }
+<?php
+//Relógio
+date_default_timezone_set('America/Sao_Paulo');
+if (isset($_POST['mostrahora1'])) {
+    $data = getdate();
+    $hora = "$data[hours]:$data[minutes]:$data[seconds] ";
+    $dia = "$data[weekday],  $data[mday] de $data[month] de $data[year]";
+    echo json_encode($hora . $dia);
 }
 
-//PHP - Função Fatorial:(3)
-if (isset($_POST['fatorial'])) { //verificando se o input fatorial está definido
-    require '../php/funcoes/fatorial.php';
-    $aux = (int)($_POST['fatorial']); // definindo uma variavel auxiliar para manter o input fatorial com o valor que a pessoa está utilizando para a conta
-    $_POST['resultFat'] = fatorial((int)($_POST['fatorial'])); // definindo o resultado fatorial por meio da funcão fatorial criada anteriormente | Utilizando a função int pois fatorial só está definido para os naturais
-    require_once '../../index.php';
+if (isset($_POST['mostrahora2'])) {
+    $data2 = new DateTime();
+    $diaHora =  $data2->format('d/m/Y H:i:s');
+    echo json_encode($diaHora);
 }
 
-//
+if (isset($_POST['mostrahora3'])) {
+    $unix = "Unix : " . strtotime("now") . 's';
+    echo json_encode($unix);
+}
 
-//PHP Calculadora - (7)
-if ((isset($_POST['a'])) && (isset($_POST['b']))) {
-    require '../php/funcoes/calculadora.php';
+if (isset($_POST['valFatorar']) && isset($_POST['fatForm'])) {
+    require './funcoes/fatorial.php';
+    $numero = (int)($_POST['valFatorar']);
+    echo fatorial($numero);
+}
+
+if (isset($_POST['a']) && isset($_POST['b']) && isset($_POST['calcForm'])) {
+    require './funcoes/calculadora.php';
+    $calc = new calculadora();
+
     $a = $_POST['a'];
     $b = $_POST['b'];
-    $calc = new calculadora();
-    if (isset($_POST['soma'])) {
-        $calc = $calc->soma($a, $b);
-    } else if (isset($_POST['sub'])) {
-        $calc = $calc->sub($a, $b);
-    } else if (isset($_POST['mult'])) {
-        $calc = $calc->mult($a, $b);
-    } else if (isset($_POST['div'])) {
-        $calc = $calc->div($a, $b);
-    }
-    require_once '../../index.php';
+    $resultado = $calc->soma($a, $b);
+    echo $resultado;
 }
 
+if (isset($_POST['email']) && isset($_POST['msgForm'])) {
+    require './funcoes/enviaremail.php';
+    $primeiroNome = strtok(ucwords(strtolower($_POST['nome']))); //pegando o primeiro nome
+    $nome = $_POST['nome']; // pega o nome inteiro e ajusta padroniza começando com a primeira letra maiuscula em cada palavra
+    $email = $_POST['email'];
+    $msg = $_POST['msg'];
+    echo enviarEmail($primeiroNome, $email, $msg);
+}
+
+//calculadora:
+if (isset($_POST['somar'])) {
+    require '../php/funcoes/calculadora.php';
+    $calc = new calculadora();
+    $calc = $calc->soma($_POST['a'], $_POST['b']);
+    echo json_encode($calc);
+}
+if (isset($_POST['subtrair'])) {
+    require '../php/funcoes/calculadora.php';
+    $calc = new calculadora();
+    $calc = $calc->sub($_POST['a'], $_POST['b']);
+    echo json_encode($calc);
+}
+if (isset($_POST['multiplicar'])) {
+    require '../php/funcoes/calculadora.php';
+    $calc = new calculadora();
+    $calc = $calc->mult($_POST['a'], $_POST['b']);
+    echo json_encode($calc);
+}
+if (isset($_POST['dividir'])) {
+    require '../php/funcoes/calculadora.php';
+    $calc = new calculadora();
+    $calc = $calc->div($_POST['a'], $_POST['b']);
+    echo json_encode($calc);
+}
+//
+
+
+
+
+
+// /////////////////////////////
 //PHP - Exibir Tabela produtos
 if (isset($_POST['show'])) {
     require_once '../../index.php';
@@ -113,6 +126,3 @@ if (!empty($_GET['id'])) { //verificando se o id não está vazio
     }
     require_once '../../index.php';
 }
-
-?>
-<!--  -->

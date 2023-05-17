@@ -11,6 +11,7 @@
 
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->CharSet = 'UTF-8';
+        $mail->setFrom('junior.js87@gmail.com');
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
@@ -19,30 +20,17 @@
         $mail->Password = 'xiccbkvhskwrtqds';
         $mail->Port = 587;
 
-        $mail->setFrom($email);
-        $mail->addAddress('junior.js87@gmail.com');
+        $mail->setFrom('junior.js87@gmail.com');
+        $mail->addAddress($email);
 
         $mail->isHTML(true);
         $mail->Subject = "Mensagem de: $nome";
-        $mail->Body = $msg . "\nFrom: " . $email;
+        $mail->Body = $msg;
 
-        $mail->send();
-        if (!$mail->send()) { //se a função send do PHPMailer não for definida, apresenta erro
-            echo
-            "
-            <script>
-            alert('Não foi possível enviar a mensagem.<br> Erro:" . "$mail->ErrorInfo');
-            document.location.href = '/index.php';
-            </script>
-            ";
+        if ($mail->send()) { //se a função send do PHPMailer não for definida, apresenta erro
+            return $nome;
         } else { // se a função send realizar o envio sem problemas, mostra um agradecimento
-            echo
-            "
-            <script>
-            alert('Obrigado por entrar em contato, " . "$nome!');
-            document.location.href = '/index.php'
-            </script>
-            ";
+            return $mail->ErrorInfo;
         }
     }
     ?>

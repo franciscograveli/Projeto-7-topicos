@@ -1,17 +1,9 @@
 <?php
-function fatorial($n)
+function fatorial($number)
 {
-    $fatorial = $n;
-    if (($n >= 0) && ($n < 2)) {
-        return 1;
-    } else if ($n >= 2) {
-        do {
-            $fatorial = $fatorial * ($n - 1);
-            $n = $n - 1;
-        } while ($n >= 2);
-
-        return ($fatorial);
-    } else {
-        return "!Inválido!";
+    $fatorial = 1;
+    for ($i = 1; $i <= $number; $i++) {
+        $fatorial *= $i;
     }
+    return $fatorial;
 }
