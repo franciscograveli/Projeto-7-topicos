@@ -22,7 +22,7 @@ function consultarTabela($nomeTabela)
     $mysqli = conectarBanco();
     $resultadoTabela = $mysqli->query("SELECT * FROM $nomeTabela");
     $mysqli->close();
-    return $resultadoTabela;
+    return $resultadoTabela->fetch_all();
 }
 function consultarTabelaPorId($nomeTabela, $id)
 {
@@ -30,15 +30,14 @@ function consultarTabelaPorId($nomeTabela, $id)
     $sqlSelect = "SELECT * FROM $nomeTabela WHERE id=$id";
     $resultadoTabela = $mysqli->query($sqlSelect);
     $mysqli->close();
-    return $resultadoTabela;
+    return $resultadoTabela->fetch_assoc();
 }
 function editarTabela($nomeTabela, $nomeItem, $precoItem, $id)
 {
-    if ($id != -1) {
 
-        $mysqli = conectarBanco();
-        $sqlEdit = "UPDATE $nomeTabela SET nome='$nomeItem', preco='$precoItem' WHERE id='$id'"; //definindo codigo de alteração para o sql
-        $mysqli->query($sqlEdit);
-        $mysqli->close();
-    }
+    $mysqli = conectarBanco();
+    $sqlEdit = "UPDATE $nomeTabela SET nome='$nomeItem', preco='$precoItem' WHERE id='$id'"; //definindo codigo de alteração para o sql
+    $mysqli->query($sqlEdit);
+    $mysqli->close();
+    return consultarTabela($nomeTabela);
 }

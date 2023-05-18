@@ -37,6 +37,75 @@ function relogios(mostrahora) {
         $('#relogio3').text('');
     }
 }
+
+function formEdit(id) {
+    id = parseInt(id);
+    if (id != null || id != '') {
+
+        try {
+            $.ajax({
+                url: '/assets/php/controller.php',
+                method: 'POST',
+                data: { id: id },
+                dataType: 'json'
+            }).done(function (result) {
+                $('#nomeItem').val(result['nome']);
+                $('#precoItem').val(formatar(result['preco']));
+                $('#update').val(id);
+            });
+        } catch (error) {
+            console.log('error');
+        }
+    }
+}
+
+function Editar(nome, preco, id) {
+    id = parseFloat(id);
+    if ((nome != '' || nome != null) && (preco != '' || preco != null)) {
+        try {
+            $.ajax({
+                url: '/assets/php/controller.php',
+                method: 'POST',
+                data: {
+                    nome: nome,
+                    preco: preco,
+                    id: id,
+                    update: '',
+                },
+                dataType: 'json'
+            }).done(function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Editado!',
+                    text: nome + ' Atualizado com sucesso',
+
+
+                });
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: nome + ' Não foi atualiza adequadamente.'
+            });
+        }
+    }
+    else {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    }
+}
+
+function formatar(n) {
+    n = n.toString().replaceAll(",", ";");
+    n = n.toString().replaceAll(".", ",");
+    n = n.toString().replaceAll(";", ".");
+    return n;
+}
+
+function ativarBotao(idBotao) {
+    $(idBotao).fadeIn(2000).prop("disabled", false);
+}
+
 let mostrahora = $('.mostrahora').val();
 setInterval(relogios, 800, mostrahora);
 
@@ -59,6 +128,20 @@ $("#fatForm").submit((e) => {
             data: { valFatorar: valFatorar, fatForm: fatForm },
             dataType: 'json'
         }).done(function (result) {
+
+            if (result > 99999) {
+                $('#resultFat').fadeOut(100).fadeIn(100).addClass('wi');
+                if (result > 99999999999999) {
+                    $('#resultFat').removeClass('wi');
+                    $('#resultFat').addClass('wi2');
+                }
+            }
+
+            else {
+                $('#resultFat').removeClass('wi');
+                $('#resultFat').removeClass('wi2');
+            }
+
             $('#numberFat').val('').attr('placeholder', valFatorar + '! = ' + result);
             $('#resultFat').val(result);
         });
@@ -79,7 +162,6 @@ $("#msgForm").submit((e) => {
             title: 'Preencha',
             text: 'Todos campos devem ser preenchidos para enviar a mensagem.'
         });
-
 
     } else {
         try {
@@ -108,6 +190,8 @@ $("#msgForm").submit((e) => {
                 title: 'Email enviado com Sucesso!',
                 text: 'Obrigado pelo Contato, ' + nome + '!'
             });
+            $('#botaoMsg').fadeOut(2000).prop("disabled", true);
+            setInterval(ativarBotao, 10000, '#botaoMsg');
         }
     }
 });
@@ -127,8 +211,7 @@ $('#calcForm').on('submit', function (e) {
                 data: { somar: '', a: a, b: b },
                 dataType: 'json'
             }).done(function (result) {
-                console.log(result);
-                $('#resultCalc').val(result);
+                $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
             $('#resultCalc').text('erro');
@@ -143,11 +226,10 @@ $('#calcForm').on('submit', function (e) {
                 data: { subtrair: '', a: a, b: b },
                 dataType: 'json'
             }).done(function (result) {
-                console.log(result);
-                $('#resultCalc').val(result);
+                $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('erro');
+            $('#resultCalc').text('error');
         }
         return;
     }
@@ -159,11 +241,10 @@ $('#calcForm').on('submit', function (e) {
                 data: { multiplicar: '', a: a, b: b },
                 dataType: 'json'
             }).done(function (result) {
-                console.log(result);
-                $('#resultCalc').val(result);
+                $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('erro');
+            $('#resultCalc').text('error');
         }
         return;
     }
@@ -175,25 +256,29 @@ $('#calcForm').on('submit', function (e) {
                 data: { dividir: '', a: a, b: b },
                 dataType: 'json'
             }).done(function (result) {
-                console.log(result);
-                $('#resultCalc').val(result);
+                $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('erro');
+            $('#resultCalc').text('error');
         }
         return;
     }
 });
 
+$('.tabela').on('click', (e) => {
+    e.preventDefault();
+    var id = $(document.activeElement).data('action');
+    formEdit(id);
+})
 
 
-
-
-
-
-
-
-
+$('#PTabela').on('submit', (e) => {
+    e.preventDefault();
+    let nome = $('#nomeItem').val();
+    let preco = $('#precoItem').val();
+    let id = $('#update').val();
+    Editar(nome, preco, id);
+});
 
 
 

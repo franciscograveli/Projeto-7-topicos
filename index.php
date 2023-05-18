@@ -34,7 +34,7 @@
                     <input type="text" name="nome" id="nome" placeholder="Nome:">
                     <input type="email" name="email" id="email" placeholder="E-mail:">
                     <textarea id="msg" name="msg" id="msg" rows="4" cols="50" placeholder="Mensagem:"></textarea>
-                    <input type="submit" value="Enviar">
+                    <input type="submit" id="botaoMsg" value="Enviar">
                 </form>
             </div>
             <!--  -->
@@ -44,11 +44,11 @@
                     <input readonly type="text" name="resultCalc" id="resultCalc" value="">
                     <input type="number" name="a" id="a" step="any" placeholder="A:">
                     <input type="number" name="b" id="b" step="any" placeholder="B:">
-                    <div class="Calbtns">
-                        <input type="submit" value="SOMA" name="soma" data-action="somar" id="soma">
-                        <input type="submit" value="SUBTRAÇÃO" name="sub" data-action="subtrair" id="sub">
-                        <input type="submit" value="MULTIPLICAÇÃO" name="mult" data-action="multiplicar" id="mult">
-                        <input type="submit" value="DIVISÃO" name="div" data-action="dividir" id="div">
+                    <div class="CalBtns">
+                        <input type="submit" value="" name="soma" data-action="somar" id="soma">
+                        <input type="submit" value="" name="sub" data-action="subtrair" id="sub">
+                        <input type="submit" value="" name="mult" data-action="multiplicar" id="mult">
+                        <input type="submit" value="" name="div" data-action="dividir" id="div">
                     </div>
                 </form>
             </div>
@@ -65,16 +65,16 @@
         </div>
     </section>
     <div class=" areaResult" id="resultado">
-        <form action="/assets/php/controller.php" method="POST">
-            <input type="submit" name="show" value="Tabela">
-        </form>
         <form action="" method="POST" id="PTabela">
-            <input type="text" name="nomeItem" id="" placeholder="Nome:" value="<?php if (!empty($nomeI)) : echo htmlspecialchars($nomeI);
-                                                                                endif; ?>">
-            <input type="number" step="any" min="0" name="precoItem" id="" placeholder="Preço:" value="<?php if (!empty($precoI)) : echo htmlspecialchars($precoI);
-                                                                                                        endif; ?>">
-            <input type="submit" name="update" value="Editar">
+            <input type="text" name="nomeItem" id="nomeItem" placeholder="Nome:" value="">
+            <input type="number" step="any" min="0" name="precoItem" id="precoItem" placeholder="Preço:" value="">
+            <button type="submit" name="" id="update" value="">EDITAR</button>
         </form>
+        <?php
+        require_once './assets/php/controller.php';
+        $controller = new ContruirTabela();
+        echo $controller->montaTabela();
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

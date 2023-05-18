@@ -29,6 +29,11 @@ body {
     flex-direction: column;
     transition: 0.5s;
     overflow-x: hidden;
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 10%, rgba(221, 221, 221, 1) 85%, rgba(5, 79, 119, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 10%, rgba(221, 221, 221, 1) 85%, rgba(5, 79, 119, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 240, 1) 10%, rgba(221, 221, 221, 1) 85%, rgba(5, 79, 119, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#054f77", GradientType=1);
 }
 
 nav {
@@ -78,6 +83,12 @@ section {
     justify-content: center;
 }
 
+form {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
 .areaMsg,
 .areaCalc,
 .areaFat,
@@ -121,7 +132,8 @@ textarea {
     font-size: 1rem;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button {
     background-color: var(--azul);
     color: var(--claro2);
     opacity: 0.95;
@@ -130,7 +142,8 @@ input[type="submit"] {
     padding: 0;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+button:hover {
     cursor: pointer;
     opacity: 1;
 }
@@ -159,9 +172,11 @@ input[type="number"]:focus,
     width: 100%;
     padding: 0 1em;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
+
 }
 
 input[name="soma"] {
@@ -183,6 +198,7 @@ input[name="mult"] {
 
 #soma,
 #subtrai {
+
     max-width: 50px;
     background-size: 50px;
 }
@@ -206,6 +222,13 @@ input[name="mult"] {
     margin: 0.5rem 1rem;
 }
 
+.areaCalc input[type='text'] {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--azul);
+}
+
 
 #PTabela input {
     margin: 0.5rem 0.5rem;
@@ -215,6 +238,10 @@ input[name="mult"] {
 .areaResult input[type='text'],
 .areaResult input[type='number'] {
     min-width: 300px;
+}
+
+#update {
+    background-color: #054f77;
 }
 
 /* .result {
@@ -238,11 +265,12 @@ input[name="mult"] {
     max-width: 1000px;
     width: 90%;
     border-radius: 0.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 2rem;
     padding: 0.5rem 1.5rem;
     background-color: var(--claro2);
     border: 1px dashed var(--azul);
-    box-shadow: 0 10px var(--escuro);
+    box-shadow: -0px 10px 20px var(--escuro);
 
 }
 
@@ -285,7 +313,9 @@ th {
     color: var(--azul);
 }
 
-#botaoTabela {
+#botaoTabela,
+button {
+    align-self: center;
     border: none;
     padding: 0rem 0rem;
     width: 100px;
@@ -295,7 +325,8 @@ th {
     max-height: 30px;
 }
 
-#botaoTabela:hover {
+#botaoTabela:hover,
+button:hover {
     opacity: 1;
     box-shadow: inset 0 0 5px #141414;
 }
@@ -329,12 +360,20 @@ th {
         cursor: default;
         text-align: center;
         font-size: 1.25rem;
-        color: var(--escuro);
+        color: var(--azul);
         font-weight: 500;
         height: 50px;
         border-radius: 100px;
         box-shadow: 0 0 10px var(--escuro);
         width: 70px;
+    }
+
+    .wi {
+        width: 50% !important;
+    }
+
+    .wi2 {
+        width: 100% !important;
     }
 
     .areaResult {
@@ -362,7 +401,8 @@ th {
         min-width: 150px;
     }
 
-    .areaResult input[type="submit"] {
+
+    button {
         width: 15%;
         min-width: 100px;
     }
@@ -387,8 +427,6 @@ th {
     #idTabela {
         width: 50px;
         height: 50px;
-        border-radius: 50px;
-        border: 1px dashed var(--azul);
         font-weight: bolder;
     }
 

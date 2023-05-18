@@ -1,5 +1,38 @@
 <?php
+class ContruirTabela
+{
+    private $tabela = 'produtos';
+
+    public function montaTabela()
+    {
+        require_once 'model.php';
+        $dados = consultarTabela($this->tabela);
+
+        $tabela = '<table class="tabela">';
+        $tabela .= '<tr>';
+        $tabela .= '<th>ID:</th>';
+        $tabela .= '<th>Nome:</th>';
+        $tabela .= '<th>Preço:</th>';
+        $tabela .= '</tr>';
+
+        foreach ($dados as $row) :
+            $tabela .= '<tr>';
+            $tabela .= '<td id="idTabela" value="' . $row[0] . '">' . $row[0] . '</td>';
+            $tabela .= '<td id="nomeTabela" value="' . $row[0] . '">' . $row[1] . '</td>';
+            $tabela .= '<td>' . $row[2] . '</td>';
+            $tabela .= '<td><input type="submit" id="editarTabela" data-action="' . $row[0] . '" value="Editar" href="#resultado"> </td>';
+            $tabela .= '</tr>';
+        endforeach;
+
+
+        $tabela .= '</table>';
+
+        return $tabela;
+    }
+}
+
 //Relógio
+
 date_default_timezone_set('America/Sao_Paulo');
 if (isset($_POST['mostrahora1'])) {
     $data = getdate();
@@ -69,60 +102,20 @@ if (isset($_POST['dividir'])) {
     $calc = $calc->div($_POST['a'], $_POST['b']);
     echo json_encode($calc);
 }
-//
 
-
-
-
-
-// /////////////////////////////
-//PHP - Exibir Tabela produtos
-if (isset($_POST['show'])) {
-    require_once '../../index.php';
+if (isset($_POST['id'])) { //verificando se o id não está vazio 
+    require 'model.php';
+    $id = $_POST['id'];
+    $dadosID = consultarTabelaPorId('produtos', $id);
+    echo json_encode($dadosID);
 }
-
-require '../php/model.php';
-
-$retorno = consultarTabela('produtos'); // solicitando matriz associativa da tabela para o model
-$nomeI = '';
-$precoI = '';
-
-// exibindo tabela
-if ($retorno->num_rows > 0) { //verificando se a tabela não está vazia
-    echo "<table  class='tabela'>";
-    echo "
-            <tr>
-                <th id='thId'>ID:</th>
-                <th>Nome:</th>
-                <th>Preço:</th>
-            </tr>
-            ";
-    while ($row = $retorno->fetch_assoc()) {
-        echo "<tr>
-                        <td id='idTabela'>" . $row["id"] . "</td>
-                        <td>" . $row["nome"] . "</td>
-                        <td>" . $row["preco"] . "</td>
-                        <td id='botaoTabela'><a href='controller.php?id=$row[id]#resultado'>Editar</a></td>
-                    </tr>";
-    }
-}
-//
-if (!empty($_GET['id'])) { //verificando se o id não está vazio 
-    $id = $_GET['id'];
-
-    $resultadoById = consultarTabelaPorId('produtos', $id); //definindo uma variavel para guardar o resultado da busca por id
-    if ($resultadoById->num_rows > 0) {
-        while ($produto = $resultadoById->fetch_assoc()) { //utilizando a var $produto como uma matriz associativa (fetch_assoc) para poder trabalhar com o banco
-            $nomeI = $produto['nome'];
-            $precoI = $produto['preco'];
-        }
-    }
-    if (isset($_POST['update'])) { //verificando se o id não está vazio 
-        //definindo a variavel $id utilizando get pois o id é passado na url
-        $nomeI = $_POST['nomeItem'];
-        $precoI = $_POST['precoItem'];
+if (isset($_POST['update'])) { //verificando se o id não está vazio 
+    //definindo a variavel $id utilizando get pois o id é passado na url
+    if (!empty($_POST['nome']) && !empty($_POST['preco']) && (isset($_POST['id']))) {
+        $id = $_POST['id'];
+        $nomeI = $_POST['nome'];
+        $precoI = $_POST['preco'];
         editarTabela('produtos', $nomeI, $precoI, $id);
-        require_once '../../index.php';
+        return;
     }
-    require_once '../../index.php';
 }
