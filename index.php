@@ -70,10 +70,10 @@
             <input type="number" step="any" min="0" name="precoItem" id="precoItem" placeholder="Preço:" value="">
             <button type="submit" name="" id="update" value="">EDITAR</button>
         </form>
+
         <?php
         require_once './assets/php/controller.php';
-        $controller = new ContruirTabela();
-        echo $controller->montaTabela();
+        echo auxExibirTabela();
         ?>
     </div>
 

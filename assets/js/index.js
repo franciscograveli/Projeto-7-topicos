@@ -176,12 +176,7 @@ $("#msgForm").submit((e) => {
                 },
                 dataType: 'json'
             });
-        } catch (err) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!'
-            });
-        } finally {
+
             nome = nome.toLowerCase();
             nome = nome.split(' ')[0]
             nome = nome[0].toUpperCase() + nome.substr(1);
@@ -190,6 +185,13 @@ $("#msgForm").submit((e) => {
                 title: 'Email enviado com Sucesso!',
                 text: 'Obrigado pelo Contato, ' + nome + '!'
             });
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!'
+            });
+        } finally {
             $('#botaoMsg').fadeOut(2000).prop("disabled", true);
             setInterval(ativarBotao, 10000, '#botaoMsg');
         }
@@ -214,7 +216,7 @@ $('#calcForm').on('submit', function (e) {
                 $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('erro');
+            $('#resultCalc').text(error);
         }
         return;
     }
@@ -229,7 +231,7 @@ $('#calcForm').on('submit', function (e) {
                 $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('error');
+            $('#resultCalc').text(error);
         }
         return;
     }
@@ -244,7 +246,7 @@ $('#calcForm').on('submit', function (e) {
                 $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('error');
+            $('#resultCalc').text(error);
         }
         return;
     }
@@ -259,7 +261,7 @@ $('#calcForm').on('submit', function (e) {
                 $('#resultCalc').val(formatar(result));
             });
         } catch (error) {
-            $('#resultCalc').text('error');
+            $('#resultCalc').text(error);
         }
         return;
     }
@@ -280,44 +282,3 @@ $('#PTabela').on('submit', (e) => {
     Editar(nome, preco, id);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $("#calcForm").submit((e) => {
-//     e.preventDefault();
-//     let calcForm = $('#calcForm').val();
-//     let a = $('#a').val();
-//     let b = $('#b').val();
-//     if ((a == '') || (a == null)) { a = 0 };
-//     if ((b == '') || (b == null)) { b = 0 };
-//     $('#soma').on('submit',function (event) {
-//         alert("Handler for `submit` called.");
-//         event.preventDefault();
-//     });
-
-
-//     $.ajax({
-//         url: '/assets/php/controller.php',
-//         method: 'POST',
-//         data: { a: a, b: b, calcForm: calcForm },
-//         dataType: 'json'
-//     }).done(function (result) {
-//         $('#a').val('').attr('placeholder', "A : " + a);
-//         $('#b').val('').attr('placeholder', "B : " + b);
-//         $('#resultCalc').val(result);
-//     });
-
-// });

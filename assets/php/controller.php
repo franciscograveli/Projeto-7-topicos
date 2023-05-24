@@ -30,7 +30,11 @@ class ContruirTabela
         return $tabela;
     }
 }
-
+function auxExibirTabela()
+{
+    $controller = new ContruirTabela();
+    return $controller->montaTabela();
+}
 //Relógio
 
 date_default_timezone_set('America/Sao_Paulo');
